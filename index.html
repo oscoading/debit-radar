@@ -1,0 +1,66 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+    <title>DebitRadar — Subscription price-hike detector</title>
+    <link rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&display=swap">
+    <link rel="stylesheet" href="style.css">
+    <script src="https://unpkg.com/lucide@latest"></script>
+</head>
+
+<body>
+    <main>
+        <header>
+            <b>DebitRadar</b>
+            <span class="mut">hackFront India 2026 · FinTech</span>
+        </header>
+
+        <div class="rbi-badge"><i data-lucide="scale"></i> Built on RBI 24h Pre-Debit Mandate &amp; Sahamati AA Specs</div>
+
+        <p class="mut" style="margin:-4px 0 14px;font-size:13px">
+            Detects subscription price hikes before the money leaves your account, and shows how to stop the payment.
+        </p>
+
+        <div id="step"></div>
+        <div id="cap"></div>
+
+        <!-- Dynamic Test Scenarios for Judges & Evaluation -->
+        <div class="sim-bar" id="sim-bar" style="display:none">
+            <div class="sim-head">
+                <span class="mono" style="font-weight:600;font-size:11px">TEST SCENARIO:</span>
+                <span class="mut" id="scen-desc" style="font-size:11px">Netflix +25% hike</span>
+            </div>
+            <div class="pills">
+                <button class="pill active" id="pill-netflix" onclick="setScenario('Netflix', 249)">Netflix (+25%)</button>
+                <button class="pill" id="pill-hotstar" onclick="setScenario('Hotstar', 399)">Hotstar (+33%)</button>
+                <button class="pill" id="pill-spotify" onclick="setScenario('Spotify', 119)">Spotify (Normal/No hike)</button>
+            </div>
+        </div>
+
+        <div class="btns" id="btns">
+            <button class="main" id="alert"></button>
+            <button class="main out" id="out">Log out</button>
+        </div>
+
+        <div class="phone">
+            <div class="sb">
+                <span class="mono">9:00</span>
+                <span>UPI</span>
+            </div>
+            <div class="bar">AutoPay</div>
+            <div id="scr"></div>
+        </div>
+
+        <p class="note">
+            All data is simulated for demonstration. Company names are examples only; prices and
+            transactions are fictional. Production architecture connects via licensed Account Aggregator (RBI-regulated NBFC-AA).
+        </p>
+    </main>
+
+    <script src="app.js"></script>
+</body>
+
+</html>
