@@ -14,3 +14,7 @@ $RECYCLE.BIN/
 # Logs & temp
 *.log
 
+
+backup_original/
+*.db*
+node_modules/

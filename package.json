@@ -1,0 +1,27 @@
+{
+  "name": "debit-radar",
+  "version": "2.0.0",
+  "description": "> **Track:** FinTech | **Initiative:** hackFront India 2026 (Where U Elevate)  \r > **Core Focus:** UPI AutoPay Mandate Protection, Account Aggregator (AA) Architecture, Lucide Icons & Consumer FinTech",
+  "main": "app.js",
+  "scripts": {
+    "start": "node server.js",
+    "test": "node test.js",
+    "benchmark": "node benchmark.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/oscoading/debit-radar.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/oscoading/debit-radar/issues"
+  },
+  "homepage": "https://github.com/oscoading/debit-radar#readme",
+  "dependencies": {
+    "cors": "^2.8.6",
+    "express": "^5.3.0"
+  }
+}

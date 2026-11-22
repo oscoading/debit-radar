@@ -1,3 +1,11 @@
+/**
+ * DebitRadar UI Stylesheet
+ * 
+ * Mobile-first responsive layout replicating a UPI AutoPay phone interface.
+ * Implements native dark/light mode using CSS custom properties.
+ */
+
+/* 1. Theme Variables & Color Tokens */
 :root {
     --bg: #fff;
     --ink: #141414;
@@ -13,6 +21,7 @@
     padding-bottom: env(safe-area-inset-bottom, 0px);
 }
 
+/* System dark mode detection */
 @media (prefers-color-scheme: dark) {
     :root:not([data-theme="light"]) {
         --bg: #121212;
@@ -26,6 +35,7 @@
     }
 }
 
+/* Explicit dark theme override */
 :root[data-theme="dark"] {
     --bg: #121212;
     --ink: #ececec;
@@ -45,6 +55,7 @@ html {
     box-sizing: border-box;
 }
 
+/* 2. Base Typography & Layout */
 body {
     margin: 0;
     background: var(--bg);
@@ -58,6 +69,7 @@ main {
     padding: 22px 16px 50px;
 }
 
+/* Monospace numerals for tabular currency and date displays */
 .mono {
     font-family: "IBM Plex Mono", ui-monospace, monospace;
     font-variant-numeric: tabular-nums;
@@ -75,6 +87,7 @@ main {
     color: var(--ok);
 }
 
+/* App Header */
 header {
     display: flex;
     justify-content: space-between;
@@ -87,6 +100,7 @@ header b {
     font-weight: 600;
 }
 
+/* Regulatory compliance badge */
 .rbi-badge {
     display: inline-block;
     font-size: 11px;
@@ -111,6 +125,7 @@ header b {
     min-height: 136px;
 }
 
+/* 3. Scenario Switcher (Test presets bar) */
 .sim-bar {
     background: var(--chip);
     border: 1px solid var(--line);
@@ -152,6 +167,7 @@ header b {
     border-color: var(--ink);
 }
 
+/* Primary Action Buttons */
 .main {
     font: inherit;
     font-weight: 500;
@@ -186,6 +202,7 @@ header b {
     border: 1px solid var(--ink);
 }
 
+/* 4. Simulated Phone Device Frame */
 .phone {
     height: 640px;
     border: 1px solid var(--ink);
@@ -197,6 +214,7 @@ header b {
     flex-direction: column;
 }
 
+/* Phone status bar */
 .sb {
     display: flex;
     justify-content: space-between;
@@ -216,6 +234,7 @@ header b {
     padding: 0 18px 14px;
 }
 
+/* Summary Card (Total annual commitments) */
 .sumc {
     background: var(--chip);
     border-radius: 14px;
@@ -227,6 +246,7 @@ header b {
     font: 500 22px "IBM Plex Mono", monospace;
 }
 
+/* 5. AutoPay Mandate List Items */
 .it {
     display: flex;
     gap: 12px;
@@ -235,6 +255,7 @@ header b {
     border-bottom: 1px solid var(--line);
 }
 
+/* Merchant avatar circle */
 .av {
     width: 42px;
     height: 42px;
@@ -266,12 +287,14 @@ header b {
     font-size: 14px;
 }
 
+/* Price hike warning highlight */
 .fl {
     font-size: 13px;
     color: var(--warn);
     margin-top: 4px;
 }
 
+/* Keep / Stop action buttons */
 .stop {
     font: inherit;
     font-size: 13px;
@@ -298,6 +321,7 @@ header b {
     cursor: pointer;
 }
 
+/* Input Fields (Mobile number / OTP) */
 .in {
     width: 100%;
     font: inherit;
@@ -338,6 +362,7 @@ header b {
     align-items: center;
 }
 
+/* In-app Push Notification simulation */
 .push {
     position: absolute;
     left: 12px;
@@ -373,26 +398,129 @@ header b {
     z-index: 5;
 }
 
+/* 6. In-App NPCI Common Library (CL) 2FA Revocation Sheet */
 .sheet {
     position: absolute;
     inset: 0;
     background: var(--ph);
-    padding: 48px 20px;
+    padding: 24px 18px 20px;
     z-index: 6;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: thin;
+    animation: sheetSlideUp 0.25s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-.sheet h3 {
-    margin: 0 0 12px;
-    font-size: 20px;
+@keyframes sheetSlideUp {
+    from { transform: translateY(100%); }
+    to { transform: translateY(0); }
 }
 
-.sheet ol {
-    padding-left: 20px;
-    margin: 0 0 20px;
+.npci-header {
+    border-bottom: 1px solid var(--line);
+    padding-bottom: 10px;
+    margin-bottom: 12px;
 }
 
-.sheet li {
-    margin-bottom: 10px;
+.npci-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 11px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--ink);
+    background: var(--chip);
+    padding: 4px 8px;
+    border-radius: 6px;
+    border: 1px solid var(--line);
+}
+
+.npci-sub {
+    font-size: 11px;
+    color: var(--mut);
+    margin-top: 4px;
+}
+
+.npci-card {
+    background: #0f172a;
+    color: #f8fafc;
+    border-radius: 14px;
+    padding: 14px 16px;
+    margin: 10px 0 14px;
+}
+
+.npci-card-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 13px;
+    padding: 4px 0;
+}
+
+.npci-card-row b {
+    font-family: "IBM Plex Mono", monospace;
+    font-size: 15px;
+}
+
+.npci-umn {
+    font-family: "IBM Plex Mono", monospace;
+    font-size: 10px;
+    color: #94a3b8;
+    margin-top: 6px;
+    border-top: 1px dashed #334155;
+    padding-top: 6px;
+}
+
+.npci-pin-box {
+    background: var(--chip);
+    border: 1px solid var(--line);
+    border-radius: 12px;
+    padding: 12px 14px;
+    text-align: center;
+    margin-bottom: 12px;
+}
+
+.npci-dots {
+    display: flex;
+    justify-content: center;
+    gap: 12px;
+    margin: 12px 0 8px;
+}
+
+.npci-dot {
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+    background: var(--line);
+    transition: all 0.15s ease;
+}
+
+.npci-dot.filled {
+    background: var(--ink);
+    transform: scale(1.15);
+}
+
+.npci-sec-note {
+    font-size: 10px;
+    color: var(--mut);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 4px;
+    margin-top: 8px;
+}
+
+.npci-success-card {
+    border: 1px solid #16a34a;
+    background: #f0fdf4;
+    border-radius: 14px;
+    padding: 16px;
+    margin-bottom: 14px;
 }
 
 .note {
@@ -401,6 +529,7 @@ header b {
     margin-top: 16px;
 }
 
+/* Lucide Icon alignment adjustments */
 .lucide {
     width: 14px;
     height: 14px;
@@ -435,4 +564,779 @@ header b {
     vertical-align: -2px;
 }
 
+/* 7. Sandbox SMS Push Notification & Fallback Helper Pill */
+.sms-push {
+    position: absolute;
+    left: 10px;
+    right: 10px;
+    top: 10px;
+    background: #1e293b;
+    color: #f8fafc;
+    border: 1px solid #334155;
+    border-radius: 14px;
+    padding: 10px 14px;
+    font-size: 12px;
+    box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.4);
+    z-index: 20;
+    animation: slideDown 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    cursor: pointer;
+}
 
+@keyframes slideDown {
+    from {
+        transform: translateY(-50px);
+        opacity: 0;
+    }
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+.sms-push-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    color: #94a3b8;
+    font-size: 10px;
+    font-weight: 600;
+    margin-bottom: 4px;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+.sms-push-code {
+    font-family: "IBM Plex Mono", monospace;
+    font-weight: 700;
+    font-size: 15px;
+    color: #38bdf8;
+    letter-spacing: 0.08em;
+}
+
+.sandbox-otp-pill {
+    background: var(--chip);
+    border: 1px dashed var(--line);
+    border-radius: 8px;
+    padding: 8px 12px;
+    margin: 4px 0 14px;
+    font-size: 12px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    cursor: pointer;
+    transition: background 0.15s ease;
+}
+
+.sandbox-otp-pill:hover {
+    background: var(--line);
+}
+
+.sandbox-otp-pill b {
+    font-family: "IBM Plex Mono", monospace;
+    color: var(--ok);
+}
+
+/* 8. Account Aggregator Ingestion Loader */
+.aa-loader {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    min-height: 420px;
+    padding: 30px 20px;
+    text-align: center;
+}
+
+.aa-spinner {
+    width: 42px;
+    height: 42px;
+    border: 3px solid var(--line);
+    border-top-color: var(--ink);
+    border-radius: 50%;
+    animation: aaSpin 0.75s linear infinite;
+    margin-bottom: 18px;
+}
+
+@keyframes aaSpin {
+    to { transform: rotate(360deg); }
+}
+
+.aa-step-item {
+    font-size: 12px;
+    color: var(--mut);
+    margin-top: 6px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+/* 9. Autonomous Mandate Safety Controls */
+.safety-rules-bar {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-top: 8px;
+    padding-top: 6px;
+    border-top: 1px dashed var(--line);
+    flex-wrap: wrap;
+}
+
+.safety-rule-chip {
+    font-size: 10px;
+    padding: 3px 7px;
+    border-radius: 6px;
+    background: #ecfdf5;
+    border: 1px solid #a7f3d0;
+    color: #065f46;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    cursor: default;
+    user-select: none;
+}
+
+.safety-rule-chip.cap {
+    background: #eff6ff;
+    border-color: #bfdbfe;
+    color: #1e40af;
+}
+
+.defense-badge-box {
+    margin-top: 8px;
+    padding: 8px 10px;
+    background: #f0fdf4;
+    border: 1px solid #bbf7d0;
+    border-radius: 8px;
+    font-size: 11px;
+    line-height: 1.4;
+    color: #166534;
+}
+
+.btn-group-3 {
+    display: flex;
+    gap: 6px;
+    margin-top: 8px;
+    flex-wrap: wrap;
+}
+
+.btn-group-3 button {
+    flex: 1;
+    min-width: 90px;
+    padding: 7px 6px;
+    font-size: 11px;
+    border-radius: 6px;
+    font-weight: 500;
+    cursor: pointer;
+}
+
+.btn-pause {
+    background: #fef08a;
+    border: 1px solid #facc15;
+    color: #854d0e;
+}
+
+.btn-pause:hover {
+    background: #fde047;
+}
+
+.timeout-card {
+    background: #eff6ff;
+    border: 1px solid #bfdbfe;
+    border-radius: 12px;
+    padding: 14px;
+    margin: 12px 0;
+    text-align: left;
+}
+
+.timeout-card b {
+    color: #1e3a8a;
+}
+
+.timeout-stat-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 6px;
+    margin-top: 10px;
+    font-size: 11px;
+    font-family: "IBM Plex Mono", monospace;
+}
+
+.timeout-stat-item {
+    background: #fff;
+    padding: 6px 8px;
+    border-radius: 6px;
+    border: 1px solid #dbeafe;
+}
+
+.timeout-btn {
+    background: #0284c7;
+    color: #fff;
+    border-color: #0284c7;
+}
+
+.timeout-btn:hover {
+    background: #0369a1;
+}
+
+/* 10. Regulatory Defense Matrix */
+.gov-shield-pill {
+    background: #f8fafc;
+    border: 1px solid #cbd5e1;
+    border-radius: 8px;
+    padding: 7px 10px;
+    font-size: 11px;
+    color: #334155;
+    margin-bottom: 12px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    transition: background 0.15s ease;
+}
+
+.gov-shield-pill:hover {
+    background: #f1f5f9;
+}
+
+.gov-matrix-box {
+    background: #f8fafc;
+    border: 1px solid #94a3b8;
+    border-radius: 10px;
+    padding: 12px;
+    margin-bottom: 14px;
+    font-size: 11px;
+    line-height: 1.45;
+}
+
+.gov-shield-item {
+    padding: 7px 0;
+    border-bottom: 1px dashed #cbd5e1;
+}
+
+.gov-shield-item:last-child {
+    border-bottom: none;
+}
+
+.gov-shield-tag {
+    font-family: "IBM Plex Mono", monospace;
+    font-size: 9px;
+    font-weight: 600;
+    padding: 2px 6px;
+    border-radius: 4px;
+    background: #e2e8f0;
+    color: #1e293b;
+    margin-right: 4px;
+}
+
+.lei-badge {
+    font-size: 10px;
+    color: var(--mut);
+    display: block;
+    margin-top: 1px;
+    font-family: "IBM Plex Mono", monospace;
+}
+
+.btn-voice-sarvam {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: #fdf2f8;
+    color: #be185d;
+    border: 1px solid #fbcfe8;
+    padding: 6px 12px;
+    border-radius: 6px;
+    font-size: 11px;
+    font-weight: 600;
+    cursor: pointer;
+    margin: 4px 0 6px;
+    transition: all 0.15s ease;
+    box-shadow: 0 1px 2px rgba(190, 24, 93, 0.08);
+}
+
+.btn-voice-sarvam:hover {
+    background: #fce7f3;
+    border-color: #f472b6;
+    color: #9d174d;
+}
+
+.btn-voice-sarvam:active {
+    transform: scale(0.98);
+}
+
+/* Dual Voice Engine Resilience Controls */
+.voice-engine-bar {
+    background: #fdf4ff;
+    border: 1px solid #f0abfc;
+    border-radius: 8px;
+    padding: 8px 12px;
+    margin-bottom: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+.voice-active-badge {
+    font-size: 10px;
+    font-weight: 600;
+    padding: 2px 7px;
+    border-radius: 4px;
+}
+
+.voice-active-badge.offline {
+    background: #dcfce7;
+    color: #15803d;
+    border: 1px solid #bbf7d0;
+}
+
+.voice-active-badge.sarvam {
+    background: #fae8ff;
+    color: #a21caf;
+    border: 1px solid #f5d0fe;
+}
+
+.voice-mode-buttons {
+    display: flex;
+    gap: 4px;
+}
+
+.voice-mode-btn {
+    font-family: inherit;
+    font-size: 10px;
+    font-weight: 600;
+    padding: 4px 8px;
+    border-radius: 4px;
+    border: 1px solid #cbd5e1;
+    background: #fff;
+    color: var(--mut);
+    cursor: pointer;
+    transition: all 0.15s ease;
+}
+
+.voice-mode-btn.active {
+    background: #86198f;
+    color: #fff;
+    border-color: #701a75;
+}
+
+.btn-voice-switch-mini {
+    background: none;
+    border: 1px dashed #d946ef;
+    color: #a21caf;
+    font-size: 10px;
+    padding: 3px 6px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-weight: 600;
+}
+
+.btn-voice-switch-mini:hover {
+    background: #fdf4ff;
+}
+
+.onboarding-voice-box {
+    background: #f8fafc;
+    border: 1px solid #e2e8f0;
+    border-radius: 8px;
+    padding: 8px 10px;
+    margin-bottom: 12px;
+}
+
+/* Interactive IVR Speech Recognition Card */
+.btn-mic-direct {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    background: #f0fdf4;
+    color: #15803d;
+    border: 1px solid #bbf7d0;
+    padding: 6px 10px;
+    border-radius: 6px;
+    font-size: 11px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.15s ease;
+}
+
+.btn-mic-direct:hover {
+    background: #dcfce7;
+    border-color: #86efac;
+}
+
+.ivr-live-card {
+    background: #fff1f2;
+    border: 1px solid #fecdd3;
+    border-radius: 8px;
+    padding: 10px 12px;
+    margin: 8px 0;
+    animation: ivrFadeIn 0.2s ease;
+}
+
+@keyframes ivrFadeIn {
+    from { opacity: 0; transform: translateY(-4px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.ivr-pulse-dot {
+    display: inline-block;
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: #e11d48;
+    animation: ivrPulse 1.2s infinite ease-in-out;
+}
+
+@keyframes ivrPulse {
+    0%, 100% { transform: scale(1); opacity: 1; }
+    50% { transform: scale(1.4); opacity: 0.4; }
+}
+
+.ivr-live-transcript {
+    font-family: "IBM Plex Mono", monospace;
+    font-size: 11px;
+    background: #ffffff;
+    border: 1px solid #fda4af;
+    border-radius: 4px;
+    padding: 6px 8px;
+    color: #1e293b;
+    min-height: 20px;
+    margin-top: 4px;
+}
+
+/* Global AI Voice Copilot Header Banner */
+.copilot-banner {
+    background: linear-gradient(135deg, #fdf2f8 0%, #fae8ff 100%);
+    border: 1px solid #f0abfc;
+    border-radius: 12px;
+    padding: 10px 12px 12px;
+    margin: 4px 0 12px;
+    box-shadow: 0 1px 4px rgba(168, 85, 247, 0.09);
+    box-sizing: border-box;
+    width: 100%;
+}
+
+.copilot-top {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    cursor: pointer;
+}
+
+.copilot-mic-orb {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background: #be185d;
+    color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 16px;
+    flex-shrink: 0;
+    transition: all 0.2s ease;
+    box-shadow: 0 2px 4px rgba(190, 24, 93, 0.25);
+}
+
+.copilot-mic-orb svg {
+    display: block;
+}
+
+.copilot-mic-orb.listening {
+    background: #e11d48;
+    animation: copilotOrbPulse 1.2s infinite ease-in-out;
+}
+
+@keyframes copilotOrbPulse {
+    0%, 100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(225, 29, 72, 0.6); }
+    50% { transform: scale(1.1); box-shadow: 0 0 0 8px rgba(225, 29, 72, 0); }
+}
+
+.copilot-status-pill {
+    font-size: 9px;
+    font-weight: 600;
+    background: #fbcfe8;
+    color: #9d174d;
+    padding: 2px 6px;
+    border-radius: 4px;
+    text-transform: uppercase;
+}
+
+.copilot-status-pill.live {
+    background: #ffe4e6;
+    color: #e11d48;
+}
+
+.copilot-transcript-view {
+    font-size: 11px;
+    color: #475569;
+    margin-top: 2px;
+    line-height: 1.35;
+}
+
+.copilot-chips-row {
+    display: flex;
+    gap: 5px;
+    margin-top: 8px;
+    overflow-x: auto;
+    padding: 2px 1px 4px;
+    scrollbar-width: none;
+    -webkit-overflow-scrolling: touch;
+}
+
+.copilot-chips-row::-webkit-scrollbar {
+    display: none;
+}
+
+.copilot-chip {
+    font-family: inherit;
+    font-size: 10px;
+    font-weight: 600;
+    background: #ffffff;
+    color: #86198f;
+    border: 1px solid #e879f9;
+    border-radius: 12px;
+    padding: 4px 8px;
+    white-space: nowrap;
+    cursor: pointer;
+    transition: all 0.15s ease;
+    box-shadow: 0 1px 2px rgba(0,0,0,0.04);
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    flex-shrink: 0;
+}
+
+.copilot-chip:hover {
+    background: #fdf4ff;
+    border-color: #d946ef;
+    transform: translateY(-1px);
+}
+
+.copilot-chip:active {
+    transform: scale(0.96);
+}
+
+/* Explicit Microphone Permission Modal Sheet */
+.mic-permission-sheet {
+    display: flex;
+    flex-direction: column;
+    justify-content: center !important;
+    align-items: center;
+    background: rgba(15, 23, 42, 0.88) !important;
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    z-index: 9999;
+}
+
+:root[data-theme="light"] .mic-permission-sheet {
+    background: rgba(15, 23, 42, 0.75) !important;
+}
+
+.mic-modal-card {
+    background: var(--bg);
+    border: 1px solid var(--line);
+    border-radius: 20px;
+    padding: 22px 18px 18px;
+    width: 100%;
+    max-width: 320px;
+    text-align: center;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.35);
+}
+
+.mic-modal-orb {
+    width: 64px;
+    height: 64px;
+    margin: 0 auto 14px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #be185d 0%, #ec4899 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 0 0 8px rgba(190, 24, 93, 0.18), 0 8px 20px rgba(190, 24, 93, 0.32);
+    animation: micOrbPulse 2s infinite ease-in-out;
+}
+
+.mic-modal-orb svg {
+    display: block;
+}
+
+@keyframes micOrbPulse {
+    0%, 100% {
+        transform: scale(1);
+        box-shadow: 0 0 0 8px rgba(190, 24, 93, 0.18), 0 8px 20px rgba(190, 24, 93, 0.32);
+    }
+    50% {
+        transform: scale(1.08);
+        box-shadow: 0 0 0 16px rgba(190, 24, 93, 0.08), 0 12px 28px rgba(190, 24, 93, 0.42);
+    }
+}
+
+/* 7. Android-Style User Profile Pill in Header */
+.phone-app-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+}
+
+.user-profile-header-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    background: var(--chip);
+    border: 1px solid var(--line);
+    border-radius: 20px;
+    padding: 3px 8px 3px 4px;
+    cursor: pointer;
+    transition: all 0.15s ease;
+}
+
+.user-profile-header-pill:hover {
+    background: var(--line);
+}
+
+.user-avatar-circle {
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #0284c7 0%, #0369a1 100%);
+    color: #fff;
+    font-size: 10px;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
+
+.user-header-text {
+    display: flex;
+    flex-direction: column;
+    text-align: left;
+    line-height: 1.1;
+}
+
+.user-header-name {
+    font-size: 11px;
+    font-weight: 600;
+    color: var(--ink);
+    max-width: 90px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.user-header-sub {
+    font-size: 9px;
+    color: var(--mut);
+}
+
+/* 8. Profile & Voice Settings Drawer Sheet */
+.profile-drawer-card {
+    background: var(--ph);
+    border: 1px solid var(--line);
+    border-radius: 20px;
+    padding: 20px 18px 16px;
+    width: 100%;
+    max-width: 340px;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.35);
+}
+
+.profile-user-hero {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 14px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid var(--line);
+}
+
+.profile-hero-avatar {
+    width: 46px;
+    height: 46px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #0284c7 0%, #0369a1 100%);
+    color: #fff;
+    font-size: 16px;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 10px rgba(2, 132, 199, 0.25);
+}
+
+.settings-section-title {
+    font-size: 10px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--mut);
+    margin: 12px 0 6px;
+}
+
+.settings-toggle-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 8px 0;
+    border-bottom: 1px solid var(--line);
+}
+
+.settings-toggle-label {
+    font-size: 12px;
+    font-weight: 500;
+    color: var(--ink);
+}
+
+.settings-toggle-sub {
+    font-size: 10px;
+    color: var(--mut);
+}
+
+/* 9. Single Unified Smart Voice Assistant Button */
+.btn-smart-voice-unified {
+    width: 100%;
+    background: linear-gradient(135deg, #be185d 0%, #db2777 100%);
+    color: #ffffff;
+    border: none;
+    border-radius: 10px;
+    padding: 10px 14px;
+    font-size: 12px;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    cursor: pointer;
+    box-shadow: 0 3px 8px rgba(190, 24, 93, 0.25);
+    transition: all 0.2s ease;
+}
+
+.btn-smart-voice-unified:hover {
+    filter: brightness(1.06);
+    transform: translateY(-1px);
+}
+
+.btn-smart-voice-unified.listening {
+    background: linear-gradient(135deg, #e11d48 0%, #f43f5e 100%);
+    box-shadow: 0 0 0 4px rgba(225, 29, 72, 0.25);
+    animation: smartMicPulse 1.2s infinite ease-in-out;
+}
+
+@keyframes smartMicPulse {
+    0%, 100% { box-shadow: 0 0 0 3px rgba(225, 29, 72, 0.3); }
+    50% { box-shadow: 0 0 0 7px rgba(225, 29, 72, 0.1); }
+}
+
+.smart-mic-icon-circle {
+    width: 22px;
+    height: 22px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.25);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
